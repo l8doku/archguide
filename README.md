@@ -132,7 +132,7 @@ Change root into the new system:
 
 Set the time zone:
 
-`# ln -sf /usr/share/zoneinfo/Region/City /etc/localtime`
+`# ln -sf /usr/share/zoneinfo/Europe/Moscow /etc/localtime`
 
 Run hwclock(8) to generate /etc/adjtime:
 
