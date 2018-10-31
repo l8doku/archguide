@@ -228,4 +228,29 @@ Optionally manually unmount all the partitions with `umount -R /mnt`: this allow
 
 Finally, restart the machine by typing `reboot`: any partitions still mounted will be automatically unmounted by systemd. Remember to remove the installation media and then login into the new system with the root account. 
 
-## Post installation (i.e. installing Plasma)
+## Post installation
+
+### Creating a user
+
+```
+# useradd --create-home l8doku
+# passwd l8doku
+```
+
+### Installing a graphical environment
+
+```
+pacman -S xorg-server 
+```
+
+I will worry about NVIDIA drivers later
+
+#### Plasma
+
+Before installing Plasma, make sure you have a working Xorg installation on your system.
+
+```
+# pacman -S plasma
+```
+
+To enable support for Wayland in Plasma, also install the plasma-wayland-session package. 
