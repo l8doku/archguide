@@ -221,4 +221,11 @@ By default, rEFInd will scan all of your drives (that it has drivers for) and ad
 
 ## Reboot
 
-`exit` or `Ctrl+D`
+
+Exit the chroot environment by typing `exit` or pressing `Ctrl+D`.
+
+Optionally manually unmount all the partitions with `umount -R /mnt`: this allows noticing any "busy" partitions, and finding the cause with fuser(1).
+
+Finally, restart the machine by typing `reboot`: any partitions still mounted will be automatically unmounted by systemd. Remember to remove the installation media and then login into the new system with the root account. 
+
+## Post installation (i.e. installing Plasma)
