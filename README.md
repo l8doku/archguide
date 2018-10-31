@@ -8,7 +8,7 @@ Created вторник 30 Октябрь 2018
 Скачать арч
 Постаивть арч на флешку
 
-## Гайд 
+## Pre-installation
 
 ### Поставить раскладку клавиатуры 
 
@@ -93,3 +93,115 @@ Create mount points for any remaining partitions and mount them accordingly:
 
 **genfstab** will later detect mounted file systems and swap space. 
 
+
+## Installation
+### Select the mirrors
+
+Packages to be installed must be downloaded from mirror servers, which are defined in `/etc/pacman.d/mirrorlist`. On the live system, all mirrors are enabled, and sorted by their synchronization status and speed at the time the installation image was created.
+
+The higher a mirror is placed in the list, the more priority it is given when downloading a package. You may want to edit the file accordingly, and move the geographically closest mirrors to the top of the list, although other criteria should be taken into account.
+
+This file will later be copied to the new system by pacstrap, so it is worth getting right.
+
+### Install the base packages
+
+Use the `pacstrap` script to install the _base_ package group:
+
+`# pacstrap /mnt base`
+
+This group does not include all tools from the live installation, such as `btrfs-progs` or specific wireless firmware
+
+To install packages and other groups such as `base-devel`, append the names to pacstrap (space separated) or to individual pacman commands after the **#Chroot** step. 
+
+## Configure the system
+### Fstab
+
+Generate an fstab file (use -U or -L to define by UUID or labels, respectively):
+
+`# genfstab -U /mnt >> /mnt/etc/fstab`
+
+Check the resulting file in /mnt/etc/fstab afterwards, and edit it in case of errors.
+
+### Chroot
+
+Change root into the new system:
+
+`# arch-chroot /mnt`
+
+### Time zone
+
+Set the time zone:
+
+`# ln -sf /usr/share/zoneinfo/Region/City /etc/localtime`
+
+Run hwclock(8) to generate /etc/adjtime:
+
+`# hwclock --systohc`
+
+This command assumes the hardware clock is set to UTC. See System time#Time standard for details.
+
+### Localization
+
+Uncomment en_US.UTF-8 UTF-8 and other needed locales in /etc/locale.gen, and generate them with:
+
+`# locale-gen`
+
+Set the LANG variable in locale.conf(5) accordingly, for example:
+
+```
+/etc/locale.conf
+
+LANG=en_US.UTF-8
+```
+
+If you set the keyboard layout, make the changes persistent in vconsole.conf(5):
+
+```
+/etc/vconsole.conf
+
+KEYMAP=de-latin1
+```
+
+### Network configuration
+
+Create the hostname file:
+
+```
+/etc/hostname
+
+myhostname
+```
+
+Add matching entries to hosts(5):
+
+```
+/etc/hosts
+
+127.0.0.1	localhost
+::1		localhost
+127.0.1.1	myhostname.localdomain	myhostname
+```
+
+If the system has a permanent IP address, it should be used instead of 127.0.1.1.
+
+Complete the network configuration for the newly installed environment.
+
+### Initramfs
+
+Creating a new initramfs is usually not required, because mkinitcpio was run on installation of the linux package with pacstrap.
+
+For special configurations, modify the mkinitcpio.conf(5) file and recreate the initramfs image:
+
+`# mkinitcpio -p linux`
+
+Root password
+
+Set the root password:
+
+`# passwd`
+
+Boot loader
+
+A Linux-capable boot loader must be installed in order to boot Arch Linux. See Category:Boot loaders for available choices.
+
+If you have an Intel or AMD CPU, enable microcode updates. 
