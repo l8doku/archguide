@@ -194,14 +194,31 @@ For special configurations, modify the mkinitcpio.conf(5) file and recreate the 
 
 `# mkinitcpio -p linux`
 
-Root password
+### Root password
 
 Set the root password:
 
 `# passwd`
 
-Boot loader
+### Boot loader
 
 A Linux-capable boot loader must be installed in order to boot Arch Linux. See Category:Boot loaders for available choices.
 
 If you have an Intel or AMD CPU, enable microcode updates. 
+
+Install the `refind-efi` package.
+
+Install `efibootmgr`
+
+
+```
+pacman -S refind-efi efibootmgr
+```
+
+After installing rEFInd's files to the ESP, verify that rEFInd has created `refind_linux.conf` containing the required kernel parameters (e.g. root=) in the same directory as your kernel. If it has not created this file, you will need to set up #Passing kernel parameters manually or you will most likely get a kernel panic on your next boot. 
+
+By default, rEFInd will scan all of your drives (that it has drivers for) and add a boot entry for each EFI bootloader it finds, which should include your kernel (since Arch enables EFISTUB by default). So you may have a bootable system at this point. 
+
+## Reboot
+
+`exit` or `Ctrl+D`
