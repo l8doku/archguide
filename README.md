@@ -27,8 +27,8 @@ If the directory does not exist, the system may be booted in BIOS or CSM mode. R
 
 ### Connect to the Internet 
 The installation image enables the **dhcpcd** daemon for wired network devices on boot. The connection may be verified with ping:
-``# ping archlinux.org``
-If no connection is available, stop the dhcpcd service with 'systemctl stop dhcpcd@interface` where the `interface` name can be tab-completed. Proceed to configure the network as described in **Network configuration**.
+`# ping archlinux.org`
+If no connection is available, stop the dhcpcd service with 'systemctl stop dhcpcd@interface where the `interface` name can be tab-completed. Proceed to configure the network as described in **Network configuration**.
 
 **Попробовать подсоединиться проводом в первую очередь**
 
@@ -77,18 +77,18 @@ Mount the file system on the root partition to /mnt, for example:
 
 Create mount points for any remaining partitions and mount them accordingly:
 
-`'
+```
 # mkdir /mnt/boot
 # mount /dev/sda2 /mnt/boot
-`'
+```
 
 
 **В моём случае:**
 
-`'
+```
 # mkdir /mnt/home
 # mount /dev/sda2 /mnt/home
-`'
+```
 
 
 **genfstab** will later detect mounted file systems and swap space. 
