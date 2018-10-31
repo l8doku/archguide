@@ -1,13 +1,3 @@
-Content-Type: text/x-zim-wiki
-Wiki-Format: zim 0.4
-Creation-Date: 2018-10-30T18:01:20+03:00
-
-# InstallingArch
-Created вторник 30 Октябрь 2018
-
-Скачать арч
-Постаивть арч на флешку
-
 ## Pre-installation
 
 ### Поставить раскладку клавиатуры 
